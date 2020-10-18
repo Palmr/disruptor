@@ -16,6 +16,8 @@
 package com.lmax.disruptor;
 
 
+import com.lmax.disruptor.util.ThreadHints;
+
 /**
  * Yielding strategy that uses a Thread.yield() for {@link com.lmax.disruptor.EventProcessor}s waiting on a barrier
  * after an initially spinning.
@@ -60,6 +62,7 @@ public final class YieldingWaitStrategy implements WaitStrategy
         else
         {
             --counter;
+            ThreadHints.onSpinWait();
         }
 
         return counter;

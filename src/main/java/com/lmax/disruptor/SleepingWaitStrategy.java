@@ -15,6 +15,8 @@
  */
 package com.lmax.disruptor;
 
+import com.lmax.disruptor.util.ThreadHints;
+
 import java.util.concurrent.locks.LockSupport;
 
 /**
@@ -81,6 +83,7 @@ public final class SleepingWaitStrategy implements WaitStrategy
         if (counter > 100)
         {
             --counter;
+            ThreadHints.onSpinWait();
         }
         else if (counter > 0)
         {

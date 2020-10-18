@@ -1,5 +1,7 @@
 package com.lmax.disruptor;
 
+import com.lmax.disruptor.util.ThreadHints;
+
 import java.util.concurrent.TimeUnit;
 
 import static com.lmax.disruptor.util.Util.awaitNanos;
@@ -52,6 +54,7 @@ public class TimeoutBlockingWaitStrategy implements WaitStrategy
         while ((availableSequence = dependentSequence.get()) < sequence)
         {
             barrier.checkAlert();
+            ThreadHints.onSpinWait();
         }
 
         return availableSequence;

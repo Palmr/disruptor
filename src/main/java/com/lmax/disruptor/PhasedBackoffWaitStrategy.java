@@ -15,6 +15,8 @@
  */
 package com.lmax.disruptor;
 
+import com.lmax.disruptor.util.ThreadHints;
+
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -129,6 +131,10 @@ public final class PhasedBackoffWaitStrategy implements WaitStrategy
                     }
                 }
                 counter = SPIN_TRIES;
+            }
+            else
+            {
+                ThreadHints.onSpinWait();
             }
         }
         while (true);
